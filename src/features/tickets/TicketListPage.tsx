@@ -21,6 +21,8 @@ export function TicketListPage() {
     sortDir: (searchParams.get('sortDir') as TicketFiltersType['sortDir']) || 'desc',
   };
 
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
   const { data, isLoading, error } = useGetTicketsQuery(filters);
 
   if (isLoading) {
