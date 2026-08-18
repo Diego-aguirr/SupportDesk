@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# AI tools
+.opencode/
+.atl/
+.claude/
+.cursor/
+.cursorrules
+.github/copilot-instructions.md
+.gemini/
+AGENTS.md

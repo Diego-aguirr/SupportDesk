@@ -67,11 +67,6 @@ export interface TicketFilters {
   sortDir?: 'asc' | 'desc';
 }
 
-export interface LoginPayload {
-  email: string;
-  password: string;
-}
-
 export interface AuthState {
   user: User | null;
   token: string | null;
@@ -93,16 +88,4 @@ export interface KeyboardShortcut {
 export interface SettingsState {
   theme: Theme;
   shortcuts: KeyboardShortcut[];
-}
-
-// ── CSV Export ─────────────────────────────────────────────────────────
-
-export interface CSVExportRow {
-  id: number;
-  title: string;
-  status: TicketStatus;
-  priority: TicketPriority;
-  assignee: string;
-  createdAt: string;
-  updatedAt: string;
 }
