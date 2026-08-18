@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useGetStatsQuery } from '@/features/dashboard/dashboardApi';
 import { StatCard } from '@/features/dashboard/StatCard';
 import { StatusPieChart } from '@/features/dashboard/charts/StatusPieChart';
