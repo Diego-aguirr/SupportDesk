@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from '@/features/auth/ProtectedRoute';
+import { AppLayout } from '@/components/layout/AppLayout';
 
 const LoginPage = lazy(() =>
   import('@/features/auth/LoginPage').then((m) => ({ default: m.LoginPage })),
@@ -14,6 +15,14 @@ const TicketDetailPage = lazy(() =>
   import('@/features/tickets/TicketDetailPage').then((m) => ({ default: m.TicketDetailPage })),
 );
 
+const DashboardPage = lazy(() =>
+  import('@/features/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })),
+);
+
+const SettingsPage = lazy(() =>
+  import('@/features/settings/SettingsPage').then((m) => ({ default: m.SettingsPage })),
+);
+
 function Loading() {
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -22,10 +31,11 @@ function Loading() {
   );
 }
 
-function Placeholder({ title }: { title: string }) {
+function NotFound() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <h2 className="text-xl text-[var(--color-muted)]">{title}</h2>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+      <h2 className="text-2xl font-bold text-[var(--color-text)]">404</h2>
+      <p className="text-[var(--color-muted)]">Page not found</p>
     </div>
   );
 }
@@ -36,12 +46,15 @@ export function AppRoutes() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/tickets" element={<TicketListPage />} />
-          <Route path="/tickets/:id" element={<TicketDetailPage />} />
-          <Route path="/dashboard" element={<Placeholder title="Dashboard — coming in PR 5" />} />
-          <Route path="/settings" element={<Placeholder title="Settings — coming in PR 5" />} />
+          <Route element={<AppLayout />}>
+            <Route path="/tickets" element={<TicketListPage />} />
+            <Route path="/tickets/:id" element={<TicketDetailPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
         </Route>
-        <Route path="*" element={<Placeholder title="404 — Not Found" />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
