@@ -3,8 +3,11 @@ import { useGetTicketsQuery } from '@/features/tickets/ticketsApi';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { logout } from '@/features/auth/authSlice';
 import { SearchInput } from '@/features/shared/SearchInput';
+import { Pagination } from '@/features/shared/Pagination';
 import { TicketFilters } from '@/features/tickets/TicketFilters';
+import { TicketTable } from '@/features/tickets/TicketTable';
 import type { TicketFilters as TicketFiltersType } from '@/types';
+import { useState } from 'react';
 
 export function TicketListPage() {
   const [searchParams] = useSearchParams();
@@ -21,6 +24,8 @@ export function TicketListPage() {
     sortBy: (searchParams.get('sortBy') as TicketFilters['sortBy']) || 'updatedAt',
     sortDir: (searchParams.get('sortDir') as TicketFilters['sortDir']) || 'desc',
   };
+
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const { data, isLoading, error } = useGetTicketsQuery(filters);
 
@@ -71,12 +76,13 @@ export function TicketListPage() {
       <div className="space-y-4">
         <SearchInput />
         <TicketFilters />
-        <p className="text-sm text-[var(--color-muted)] italic">
-          [ TicketTable va aquí ]
-        </p>
-        <p className="text-sm text-[var(--color-muted)] italic">
-          [ Pagination va aquí ]
-        </p>
+        <TicketTable tickets={data?.data ?? []} selectedIds={selectedIds} onSelect={setSelectedIds} />
+        <Pagination
+          total={data?.total ?? 0}
+          page={data?.page ?? 1}
+          pageSize={data?.pageSize ?? 20}
+          totalPages={data?.totalPages ?? 1}
+        />
       </div>
     </div>
   );
