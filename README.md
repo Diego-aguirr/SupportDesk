@@ -1,49 +1,32 @@
-# HelpFlow
+# React + TypeScript + Vite
 
-A modern support ticket management system built with React, TypeScript, Redux Toolkit, RTK Query, and MSW — designed to practice decoupled architecture patterns.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## Architecture
+Currently, two official plugins are available:
 
-```
-React → Redux Toolkit → RTK Query → MSW → Faker.js (dynamic mock data)
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Features
+## React Compiler
 
-- Ticket management (CRUD)
-- Search, filters, sorting, pagination
-- Drag & drop status changes
-- Dashboard with charts
-- Dark/light theme
-- Keyboard shortcuts
-- Responsive design
-- Simulated authentication
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Tech Stack
+## Expanding the Oxlint configuration
 
-- React 18+ TypeScript
-- Vite
-- Redux Toolkit + RTK Query
-- MSW + @faker-js/faker
-- React Router v6
-- react-hook-form + Zod
-- @dnd-kit
-- recharts
-- Tailwind CSS
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
 
-## Getting Started
-
-```bash
-npm install
-npm run dev
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
 ```
 
-## Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run preview  # Preview production build
-npm run lint     # Run ESLint
-npm run test     # Run tests
-```
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
