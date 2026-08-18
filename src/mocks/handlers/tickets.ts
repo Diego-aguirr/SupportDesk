@@ -4,6 +4,7 @@ import type {
   TicketStatus,
   TicketPriority,
   PaginatedResponse,
+  User,
 } from '@/types';
 import { tickets } from '../data/tickets';
 import { demoUsers } from '../data/users';
@@ -17,6 +18,16 @@ type TicketResponse = StrictResponse<
 
 function findTicketById(id: string): Ticket | undefined {
   return tickets.find((t) => t.id === Number(id));
+}
+
+function getUserFromRequest(request: Request): User {
+  const auth = request.headers.get('Authorization');
+  if (auth?.startsWith('Bearer ')) {
+    const token = auth.slice(7);
+    const user = demoUsers.find((u) => u.id === token);
+    if (user) return user;
+  }
+  return demoUsers[0];
 }
 
 export const ticketHandlers = [
@@ -97,6 +108,7 @@ export const ticketHandlers = [
       );
     }
 
+    const user = getUserFromRequest(request);
     const body = (await request.json()) as Partial<Ticket>;
     const now = new Date().toISOString();
 
@@ -114,7 +126,7 @@ export const ticketHandlers = [
         {
           id: crypto.randomUUID(),
           ticketId: tickets.length + 1,
-          actor: demoUsers[0],
+          actor: user,
           action: 'created',
           timestamp: now,
         },
@@ -144,13 +156,14 @@ export const ticketHandlers = [
 
     const body = (await request.json()) as Partial<Ticket>;
     const now = new Date().toISOString();
+    const user = getUserFromRequest(request);
 
     // Track status change
     if (body.status && body.status !== ticket.status) {
       ticket.activityLog.push({
         id: crypto.randomUUID(),
         ticketId: ticket.id,
-        actor: demoUsers[0],
+        actor: user,
         action: 'status_changed',
         from: ticket.status,
         to: body.status,
@@ -163,7 +176,7 @@ export const ticketHandlers = [
       ticket.activityLog.push({
         id: crypto.randomUUID(),
         ticketId: ticket.id,
-        actor: demoUsers[0],
+        actor: user,
         action: 'priority_changed',
         from: ticket.priority,
         to: body.priority,
@@ -176,7 +189,7 @@ export const ticketHandlers = [
       ticket.activityLog.push({
         id: crypto.randomUUID(),
         ticketId: ticket.id,
-        actor: demoUsers[0],
+        actor: user,
         action: 'assigned',
         from: ticket.assignee?.id ?? 'unassigned',
         to: body.assignee?.id ?? 'unassigned',
@@ -229,11 +242,12 @@ export const ticketHandlers = [
 
     const body = (await request.json()) as { content: string };
     const now = new Date().toISOString();
+    const user = getUserFromRequest(request);
 
     const comment = {
       id: crypto.randomUUID(),
       ticketId: ticket.id,
-      author: demoUsers[0],
+      author: user,
       content: body.content,
       createdAt: now,
     };
@@ -242,7 +256,7 @@ export const ticketHandlers = [
     ticket.activityLog.push({
       id: crypto.randomUUID(),
       ticketId: ticket.id,
-      actor: demoUsers[0],
+      actor: user,
       action: 'commented',
       timestamp: now,
     });
@@ -288,6 +302,7 @@ export const ticketHandlers = [
     };
 
     const now = new Date().toISOString();
+    const user = getUserFromRequest(request);
     const updated: Ticket[] = [];
 
     for (const id of body.ticketIds) {
@@ -296,7 +311,7 @@ export const ticketHandlers = [
         ticket.activityLog.push({
           id: crypto.randomUUID(),
           ticketId: ticket.id,
-          actor: demoUsers[0],
+          actor: user,
           action: 'status_changed',
           from: ticket.status,
           to: body.status,
