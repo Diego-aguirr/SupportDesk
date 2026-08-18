@@ -99,6 +99,39 @@ npm run test
 - **Accessible** — ARIA labels, focus management, keyboard navigation
 - **URL-Driven Filters** — Bookmarkable, shareable filter states
 
+## What Is SupportDesk?
+
+SupportDesk is a **support ticket management system** — think Zendesk, Freshdesk, or Jira Service Desk, but simpler. It's designed for teams that need to track, prioritize, and resolve customer or internal support requests.
+
+### Who is it for?
+
+- **Support agents** who handle incoming tickets and need to track their progress
+- **Team leads** who need visibility into workload distribution and resolution trends
+- **Small teams** that want a lightweight alternative to heavy enterprise tools
+
+### What can you do?
+
+| Action | How |
+|--------|-----|
+| Log in | Use the demo chips (Admin or Agent) on the login page |
+| View tickets | Navigate to **Tickets** — see all tickets with status, priority, assignee |
+| Filter & search | Use the filter toggles (status, priority) and the search bar |
+| Sort | Click any column header to sort ascending/descending |
+| Open a ticket | Click any row to see full details, comments, and activity log |
+| Update a ticket | Change status or priority directly from the detail view |
+| Add a comment | Type in the comment box and submit — it appears in the timeline |
+| Check stats | Go to **Dashboard** to see charts: tickets by status, priority, and trend over time |
+| Customize | Go to **Settings** to switch theme (light/dark/system) and configure keyboard shortcuts |
+
+### The workflow
+
+```
+Customer reports issue → Ticket created → Agent picks it up → 
+Agent updates status/priority → Agent adds comments → Issue resolved → Ticket closed
+```
+
+Every action (status change, priority update, comment) is logged in the **Activity Log** so there's a full audit trail of what happened and when.
+
 ## How It Works
 
 ### Mock API Layer
@@ -113,6 +146,7 @@ Set `VITE_API_MOCK=true` in `.env` to enable mocking (enabled by default).
 |-------|------|---------|
 | Server cache | RTK Query | All API data, automatic cache invalidation |
 | Client state | Redux Toolkit slices | Auth, settings, UI state |
+| Side effects | RTK `listenerMiddleware` | Auth persistence, theme application |
 | URL state | `useSearchParams` | Filters, pagination, search — bookmarkable |
 | Form state | react-hook-form | Login form, comment form |
 
@@ -133,7 +167,7 @@ Each feature is self-contained with its own API, components, and state:
 - **auth** — Login, logout, session persistence (localStorage)
 - **tickets** — List, detail, filters, table, pagination, comments, activity
 - **dashboard** — Stats aggregation, charts (pie, bar, line)
-- **settings** — Theme selector, keyboard shortcut configuration
+- **settings** — Theme selector, keyboard shortcut configuration, usage instructions
 
 ### Key Decisions
 
@@ -144,6 +178,7 @@ Each feature is self-contained with its own API, components, and state:
 5. **Tailwind v4** — CSS variables for theming via `@theme inline`
 6. **Sonner** — Lighter than react-toastify, better TypeScript support
 7. **@dnd-kit** — Better accessibility than react-beautiful-dnd
+8. **`listenerMiddleware`** — Reducers stay pure; side effects (localStorage, DOM) handled by RTK listener middleware
 
 ## License
 

@@ -4,7 +4,7 @@ import { dashboardApi } from '@/features/dashboard/dashboardApi';
 import authReducer from '@/features/auth/authSlice';
 import settingsReducer from '@/features/settings/settingsSlice';
 import { authApi } from '@/features/auth/authApi';
-import { subscribeAuthPersistence } from '@/features/auth/authSlice';
+import { listenerMiddleware } from '@/middleware/listeners';
 
 export const store = configureStore({
   reducer: {
@@ -16,13 +16,11 @@ export const store = configureStore({
   },
   middleware: (getDefault) =>
     getDefault()
+      .prepend(listenerMiddleware.middleware)
       .concat(ticketsApi.middleware)
       .concat(dashboardApi.middleware)
       .concat(authApi.middleware),
 });
-
-// Persist auth state to localStorage on every change
-subscribeAuthPersistence(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

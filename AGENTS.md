@@ -107,6 +107,7 @@ src/
 |-------|------|---------|
 | Server cache | RTK Query | API data, automatic cache invalidation |
 | Client state | Redux Toolkit slices | Auth, settings, UI state |
+| Side effects | RTK `listenerMiddleware` | Auth persistence, theme application |
 | URL state | `useSearchParams` | Filters, pagination, search |
 | Form state | react-hook-form | Login, comment forms |
 
@@ -127,6 +128,7 @@ src/
 6. **Zod v4** — Schema validation with `z.email()` syntax
 7. **Sonner** — Lighter than react-toastify, better TypeScript support
 8. **@dnd-kit** — Better accessibility than react-beautiful-dnd
+9. **`listenerMiddleware`** — Reducers stay pure; side effects (localStorage, DOM) handled by RTK listener middleware
 
 ## Testing
 

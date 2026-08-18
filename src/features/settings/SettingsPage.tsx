@@ -3,6 +3,7 @@ import { useAppDispatch } from '@/hooks';
 import { logout } from '@/features/auth/authSlice';
 import { ThemeSelector } from '@/features/settings/ThemeSelector';
 import { ShortcutManager } from '@/features/settings/ShortcutManager';
+import { UsageInstructions } from '@/features/settings/UsageInstructions';
 
 export function SettingsPage() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ export function SettingsPage() {
       <div className="space-y-8">
         <ThemeSelector />
         <ShortcutManager />
+        <UsageInstructions />
       </div>
     </div>
   );
