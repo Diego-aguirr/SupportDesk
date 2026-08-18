@@ -17,7 +17,7 @@ export type TicketPriority = 'low' | 'medium' | 'high' | 'urgent';
 
 export interface Comment {
   id: string;
-  ticketId: string;
+  ticketId: number;
   author: User;
   content: string;
   createdAt: string;
@@ -25,7 +25,7 @@ export interface Comment {
 
 export interface ActivityLogEntry {
   id: string;
-  ticketId: string;
+  ticketId: number;
   actor: User;
   action: 'created' | 'status_changed' | 'priority_changed' | 'assigned' | 'commented';
   from?: string;
@@ -57,6 +57,8 @@ export interface PaginatedResponse<T> {
 }
 
 export interface TicketFilters {
+  page?: number;
+  pageSize?: number;
   status?: TicketStatus[];
   priority?: TicketPriority[];
   assigneeId?: string;

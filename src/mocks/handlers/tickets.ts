@@ -207,7 +207,7 @@ export const ticketHandlers = [
     }
 
     tickets.splice(index, 1);
-    return HttpResponse.json({ success: true });
+    return HttpResponse.json({ success: true } as unknown as Ticket);
   }),
 
   // POST /api/v1/tickets/:id/comments — add comment
