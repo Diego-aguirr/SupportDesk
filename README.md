@@ -1,32 +1,40 @@
-# React + TypeScript + Vite
+# SupportDesk
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Support ticket management system built with React 18, TypeScript, Redux Toolkit, RTK Query, and MSW. Features real-time filtering, drag & drop, charts, and keyboard shortcuts. Greenfield project for mastering modern React architecture patterns.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework**: React 18+ with TypeScript
+- **Build**: Vite
+- **State**: Redux Toolkit + RTK Query
+- **Styling**: Tailwind CSS v4
+- **Mock API**: MSW + Faker.js
+- **Forms**: react-hook-form + Zod
+- **Charts**: Recharts
+- **Drag & Drop**: @dnd-kit
+- **Notifications**: Sonner
+- **Keyboard**: react-hotkeys-hook
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Set `VITE_API_MOCK=true` in `.env` to enable the mock API layer.
+
+## Features
+
+- Authentication simulation (admin/agent roles)
+- Ticket CRUD with pagination, filtering, sorting
+- Real-time search with debounce
+- Drag & drop status board (kanban)
+- Dashboard with charts (pie, bar, line)
+- Dark/Light/System theme toggle
+- Keyboard shortcuts (Ctrl+K, Ctrl+N, J/K navigation)
+- Bulk actions (status change, delete)
+- CSV export
+- Activity/audit log
+- Accessible (WCAG AA)
+- Responsive (mobile-first)

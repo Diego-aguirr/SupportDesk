@@ -44,6 +44,38 @@ export const authHandlers = [
     });
   }),
 
+  http.get('/api/v1/users/me', async ({ request }) => {
+    await delay();
+
+    if (shouldError()) {
+      return HttpResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 },
+      );
+    }
+
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return HttpResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const userId = token.replace('mock-jwt-token-', '');
+    const user = demoUsers.find((u) => u.id === userId);
+
+    if (!user) {
+      return HttpResponse.json(
+        { error: 'User not found' },
+        { status: 404 },
+      );
+    }
+
+    return HttpResponse.json(user);
+  }),
+
   http.post('/api/v1/auth/logout', async () => {
     await delay();
 
