@@ -38,5 +38,25 @@ const authSlice = createSlice({
   },
 });
 
+// Persist auth state to localStorage on every change
+function persistAuth(state: AuthState) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // storage full or unavailable — silent fail
+  }
+}
+
 export const { setCredentials, logout } = authSlice.actions;
+
+// Export a subscriber helper to attach to the store
+export function subscribeAuthPersistence(store: {
+  subscribe: (listener: () => void) => () => void;
+  getState: () => { auth: AuthState };
+}) {
+  return store.subscribe(() => {
+    persistAuth(store.getState().auth);
+  });
+}
+
 export default authSlice.reducer;
