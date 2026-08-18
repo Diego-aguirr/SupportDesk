@@ -1,4 +1,4 @@
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useGetTicketsQuery } from '@/features/tickets/ticketsApi';
 import { SearchInput } from '@/features/shared/SearchInput';
 import { Pagination } from '@/features/shared/Pagination';

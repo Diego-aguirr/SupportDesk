@@ -25,47 +25,22 @@ function loadInitialState(): SettingsState {
   return { theme: 'system', shortcuts: DEFAULT_SHORTCUTS };
 }
 
-function persist(state: SettingsState) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {}
-}
-
 const settingsSlice = createSlice({
   name: 'settings',
   initialState: loadInitialState,
   reducers: {
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
-      persist(state);
-      applyTheme(action.payload);
     },
     toggleShortcut(state, action: PayloadAction<string>) {
       const shortcut = state.shortcuts.find((s) => s.id === action.payload);
       if (shortcut) shortcut.enabled = !shortcut.enabled;
-      persist(state);
     },
     resetShortcuts(state) {
       state.shortcuts = DEFAULT_SHORTCUTS;
-      persist(state);
     },
   },
 });
-
-export function applyTheme(theme: Theme) {
-  const html = document.documentElement;
-  html.classList.remove('light', 'dark');
-
-  if (theme === 'system') {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    html.classList.add(prefersDark ? 'dark' : 'light');
-  } else {
-    html.classList.add(theme);
-  }
-}
-
-// Apply theme on load
-applyTheme(loadInitialState().theme);
 
 export const { setTheme, toggleShortcut, resetShortcuts } = settingsSlice.actions;
 export default settingsSlice.reducer;

@@ -17,7 +17,7 @@ export type TicketPriority = 'low' | 'medium' | 'high' | 'urgent';
 
 export interface Comment {
   id: string;
-  ticketId: string;
+  ticketId: number;
   author: User;
   content: string;
   createdAt: string;
@@ -25,7 +25,7 @@ export interface Comment {
 
 export interface ActivityLogEntry {
   id: string;
-  ticketId: string;
+  ticketId: number;
   actor: User;
   action: 'created' | 'status_changed' | 'priority_changed' | 'assigned' | 'commented';
   from?: string;
@@ -57,17 +57,14 @@ export interface PaginatedResponse<T> {
 }
 
 export interface TicketFilters {
+  page?: number;
+  pageSize?: number;
   status?: TicketStatus[];
   priority?: TicketPriority[];
   assigneeId?: string;
   search?: string;
   sortBy?: 'createdAt' | 'updatedAt' | 'priority';
   sortDir?: 'asc' | 'desc';
-}
-
-export interface LoginPayload {
-  email: string;
-  password: string;
 }
 
 export interface AuthState {
@@ -91,16 +88,4 @@ export interface KeyboardShortcut {
 export interface SettingsState {
   theme: Theme;
   shortcuts: KeyboardShortcut[];
-}
-
-// ── CSV Export ─────────────────────────────────────────────────────────
-
-export interface CSVExportRow {
-  id: number;
-  title: string;
-  status: TicketStatus;
-  priority: TicketPriority;
-  assignee: string;
-  createdAt: string;
-  updatedAt: string;
 }
