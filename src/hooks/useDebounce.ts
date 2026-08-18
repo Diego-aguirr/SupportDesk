@@ -8,7 +8,6 @@ export function useDebounce<T>(value: T, delay: number): T {
       setDebouncedValue(value);
     }, delay);
 
-    // Limpieza: si el usuario sigue escribiendo, cancelamos el timer anterior
     return () => clearTimeout(timer);
   }, [value, delay]);
 
