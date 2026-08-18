@@ -10,6 +10,10 @@ const TicketListPage = lazy(() =>
   import('@/features/tickets/TicketListPage').then((m) => ({ default: m.TicketListPage })),
 );
 
+const TicketDetailPage = lazy(() =>
+  import('@/features/tickets/TicketDetailPage').then((m) => ({ default: m.TicketDetailPage })),
+);
+
 function Loading() {
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -33,7 +37,7 @@ export function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/tickets" element={<TicketListPage />} />
-          <Route path="/tickets/:id" element={<Placeholder title="Ticket Detail — coming in PR 4" />} />
+          <Route path="/tickets/:id" element={<TicketDetailPage />} />
           <Route path="/dashboard" element={<Placeholder title="Dashboard — coming in PR 5" />} />
           <Route path="/settings" element={<Placeholder title="Settings — coming in PR 5" />} />
         </Route>
